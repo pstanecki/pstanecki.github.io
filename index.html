@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Paul Stanecki, computer engineering student at Purdue University. Engineering projects and things I’m learning.">
     <title>Paul Stanecki</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Paul Stanecki</h1>
-    <p>Computer Engineering student at Purdue University.</p>
-
-    <h2>Projects</h2>
-    <p>SHA-256 Accelerator</p>
-    <p>Autonomous Kart Electronics</p>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site">
+        <header class="site-header">
+            <a class="site-name" href="index.html">Paul Stanecki</a>
+            <nav aria-label="Main navigation">
+                <a href="index.html" aria-current="page">Start Here</a>
+                <a href="projects.html">Projects</a>
+                <a href="about.html">About</a>
+            </nav>
+        </header>
+        <main id="main">
+            <h1>Hi, I’m Paul Stanecki</h1>
+            <p class="intro">I’m a computer engineering student at Purdue University.</p>
+            <p>This is a place to share what I’m building and learning along the way.</p>
+            <section class="projects-section" aria-labelledby="projects-heading">
+                <h2 id="projects-heading">Projects</h2>
+            <ul class="project-list">
+                <li><a href="projects/sha-256-accelerator.html">SHA-256 Accelerator <span aria-hidden="true">→</span></a></li>
+                <li><a href="projects/autonomous-kart-electronics.html">Autonomous Kart Electronics <span aria-hidden="true">→</span></a></li>
+            </ul>
+                <a class="text-link" href="projects.html">View all projects <span aria-hidden="true">→</span></a>
+            </section>
+        </main>
+    </div>
 </body>
 </html>
