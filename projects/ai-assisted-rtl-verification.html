@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An in-progress exploration of retrieval and AI-assisted verification planning for SystemVerilog designs.">
+    <title>AI-Assisted RTL Verification — Paul Stanecki</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site">
+        <header class="site-header">
+            <a class="site-name" href="../index.html">Paul Stanecki</a>
+            <nav aria-label="Main navigation">
+                <a href="../index.html">Start Here</a>
+                <a href="../about.html">About</a>
+            </nav>
+        </header>
+        <main id="main" class="case-study">
+            <a class="text-link back-link" href="../index.html">← Back to home</a>
+            <h1>AI-Assisted RTL Verification</h1>
+            <p class="project-status">In progress · SystemVerilog / Python</p>
+            <p class="intro">Building an RTL verification copilot and exploring how retrieved hardware examples influence the LLM-assisted verification process</p>
+            <p>I’m building a RAG tool that searches through RTL designs and testbenches for relevant examples, and uses selected context -- if any -- as well as the targeted module to draft a verification plan.</p>
+            <a class="text-link" href="https://github.com/pstanecki/aes">View source on GitHub →</a>
+
+            <section aria-labelledby="pipeline-heading">
+                <h2 id="pipeline-heading">Standard Flowchart</h2>
+                <figure class="pipeline">
+                    <p>AES RTL &amp; testbenches <span aria-hidden="true">→</span> Structural chunking <span aria-hidden="true">→</span> Jina embeddings &amp; ChromaDB</p>
+                    <p>Target RTL <span aria-hidden="true">→</span> Search &amp; relevance filter <span aria-hidden="true">→</span> AI draft plan</p>
+                    <figcaption>The search only uses the indexed AES example. Any examples that pass the relevance filter are used in the generation.</figcaption>
+                </figure>
+                <p>The SystemVerilog in the current index contains 20 chunks worth of code. Small modules are just left as is, given the simplicity of the design. Larger sources are split while considering the structure of the language (blocks). A FIFO design exists within the files of the project but outside of the index, to test behaviors on unrelated hardware.</p>
+                <p>I picked the FIFO for its distance from the AES algorithm implementation, and really hope to significantly expand both what I have indexed and what's available to me to target.</p>
+            </section>
+
+            <section aria-labelledby="results-heading">
+                <h2 id="results-heading">Retrieval results</h2>
+                <div class="table-scroll"><table>
+                    <caption>23 held out queries</caption>
+                    <thead><tr><th scope="col">Measure</th><th scope="col">Result</th></tr></thead>
+                    <tbody>
+                        <tr><th scope="row">Expected module ranked first</th><td>15 / 23</td></tr>
+                        <tr><th scope="row">Expected module in the top three</th><td>22 / 23</td></tr>
+                        <tr><th scope="row">Unrelated queries accepted</th><td>0 / 6</td></tr>
+                        <tr><th scope="row">Nearby hardware queries falsely accepted</th><td>1 / 5</td></tr>
+                    </tbody>
+                </table></div>
+                <p>Modules that get ranked in the top 3 are not necessarily accepted. They do not have to pass the cutoff, and in these cases, many will not. This is a retrieval on a small AES corpus, with little depth and little quality of verification.</p>
+                <p class="source-note"><a href="ai-verification-artifacts/retrieval-results.json">expanded evaluation snapshot</a></p>
+            </section>
+
+            <section aria-labelledby="examples-heading">
+                <h2 id="examples-heading">Explore saved examples</h2>
+                <p>Some examples of searches. The cutoff for the cosine distance is 0.4731.</p>
+                <details class="retrieval-example">
+                    <summary>Successful AES match</summary>
+                    <p>Permute the rows of a 128 bit encryption state by rotating bytes</p>
+                    <div class="table-scroll"><table><caption>Top three retrieved chunks</caption><thead><tr><th scope="col">Module</th><th scope="col">Distance</th><th scope="col">Cutoff</th></tr></thead><tbody><tr><td><code>aes_shiftrows</code></td><td>0.4126</td><td>Pass</td></tr><tr><td><code>aes_shiftrows_tb</code></td><td>0.4618</td><td>Pass</td></tr><tr><td><code>aes_mixcolumns_tb</code></td><td>0.4643</td><td>Pass</td></tr></tbody></table></div>
+                    <p>aes_shiftrows is the expected module. Ranks first and passed the cutoff which is nice.</p>
+                </details>
+                <details class="retrieval-example">
+                    <summary>A missed S-box match</summary>
+                    <p>Find the combinational case table that maps each possible input byte to its Rijndael substitution value.</p>
+                    <div class="table-scroll"><table><caption>Top three retrieved chunks</caption><thead><tr><th scope="col">Module</th><th scope="col">Distance</th><th scope="col">Cutoff</th></tr></thead><tbody><tr><td><code>aes_subbytes</code></td><td>0.4941</td><td>Reject</td></tr><tr><td><code>aes_mixcolumns_tb</code></td><td>0.5106</td><td>Reject</td></tr><tr><td><code>aes_subbytes_tb</code></td><td>0.5495</td><td>Reject</td></tr></tbody></table></div>
+                    <p>aes_subbox is the expected module, and is absent from all three. The query describes a slightly different implementation of the sbox, so it is slightly misleading as far as what we're looking for. The three modules that do rank all passed the cutoff.</p>
+                </details>
+                <details class="retrieval-example">
+                    <summary>An unfamiliar FIFO</summary>
+                    <p>Query: held-out sync_fifo RTL source</p>
+                    <div class="table-scroll"><table><caption>Top three retrieved chunks</caption><thead><tr><th scope="col">Module</th><th scope="col">Distance</th><th scope="col">Cutoff</th></tr></thead><tbody><tr><td><code>aes_full_tb</code></td><td>0.6112</td><td>Reject</td></tr><tr><td><code>aes_full</code></td><td>0.6252</td><td>Reject</td></tr><tr><td><code>aes_full</code></td><td>0.6283</td><td>Reject</td></tr></tbody></table></div>
+                    <p>All three AES candidates did not pass the cutoff. The planner goes on without using the examples.</p>
+                </details>
+            </section>
+
+            <section aria-labelledby="plan-heading">
+                <h2 id="plan-heading">API call and drafting a plan</h2>
+                <p>A completed FIFO run produced directed tests, scoreboard checks, coverage goals, and assumptions. <M-D-2></p>
+                <p>As expected, no AES candidates were retrieved on this run. The plan was generated only on the FIFO module using the prompt included in the project, so it doesn't test the RAG process at all.</p>
+                <a class="text-link" href="ai-verification-artifacts/fifo-plan.md">drafted plan</a>
+            </section>
+
+            <section aria-labelledby="next-heading">
+                <h2 id="next-heading">Next steps</h2>
+		<p>I want to expand the indexed modules, and target a variety of modules for verification. I'm looking to see the influence a retrieved example has on the generation of the verification plan, and then eventually start prompting testbench generation.</p> 
+		<p>I would also wish to expand on the chunking process, as it doesn't account for all SystemVerilog syntax and structure, and modules that make more use of what the language has to offer can't be chunked meaningfully as is.</p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1297 @@
+{
+  "threshold": 0.473116934299469,
+  "summary": {
+    "calibration/positive": {
+      "queries": 6,
+      "accepted": 6,
+      "hit_at_1": 5,
+      "hit_at_3": 5
+    },
+    "calibration/unrelated": {
+      "queries": 6,
+      "accepted": 0,
+      "hit_at_1": 0,
+      "hit_at_3": 0
+    },
+    "test/positive": {
+      "queries": 23,
+      "accepted": 15,
+      "hit_at_1": 15,
+      "hit_at_3": 22
+    },
+    "test/unrelated": {
+      "queries": 6,
+      "accepted": 0,
+      "hit_at_1": 0,
+      "hit_at_3": 0
+    },
+    "test/near_domain": {
+      "queries": 5,
+      "accepted": 1,
+      "hit_at_1": 0,
+      "hit_at_3": 0
+    }
+  },
+  "queries": [
+    {
+      "id": "cal_sbox",
+      "split": "calibration",
+      "kind": "positive",
+      "query": "AES S-box byte substitution lookup table",
+      "expected_modules": [
+        "aes_sbox"
+      ],
+      "hits": [
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.2911982536315918
+        },
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 0.34760797023773193
+        },
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.3927757740020752
+        }
+      ],
+      "expected_rank": null,
+      "accepted": true
+    },
+    {
+      "id": "cal_shift",
+      "split": "calibration",
+      "kind": "positive",
+      "query": "AES ShiftRows cyclic permutation of state bytes",
+      "expected_modules": [
+        "aes_shiftrows"
+      ],
+      "hits": [
+        {
+          "module": "aes_shiftrows",
+          "type": "rtl",
+          "distance": 0.27836036682128906
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.38420557975769043
+        },
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.4533677101135254
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "cal_mix",
+      "split": "calibration",
+      "kind": "positive",
+      "query": "AES MixColumns finite field column transformation",
+      "expected_modules": [
+        "aes_mixcolumns",
+        "aes_multiply"
+      ],
+      "hits": [
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.28200042247772217
+        },
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.3020986318588257
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.5181427597999573
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "cal_key",
+      "split": "calibration",
+      "kind": "positive",
+      "query": "AES key expansion generates eleven round keys with Rcon",
+      "expected_modules": [
+        "aes_keyexpansion"
+      ],
+      "hits": [
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.23643732070922852
+        },
+        {
+          "module": "aes_keyexpansion_tb",
+          "type": "testbench",
+          "distance": 0.28455495834350586
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.307289719581604
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "cal_xor",
+      "split": "calibration",
+      "kind": "positive",
+      "query": "AES AddRoundKey XOR state with round key",
+      "expected_modules": [
+        "aes_addroundkey"
+      ],
+      "hits": [
+        {
+          "module": "aes_addroundkey",
+          "type": "rtl",
+          "distance": 0.2401561141014099
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.3238958716392517
+        },
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.3591582179069519
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "cal_round",
+      "split": "calibration",
+      "kind": "positive",
+      "query": "AES final encryption round omits mix columns",
+      "expected_modules": [
+        "aes_round"
+      ],
+      "hits": [
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.28712034225463867
+        },
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.31495362520217896
+        },
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.3592448830604553
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "cal_recipe",
+      "split": "calibration",
+      "kind": "unrelated",
+      "query": "How do I bake a sourdough loaf with a crispy crust?",
+      "hits": [
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.7091822624206543
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.7230185270309448
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.7278902530670166
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "cal_travel",
+      "split": "calibration",
+      "kind": "unrelated",
+      "query": "Plan a three day vacation visiting museums in Rome.",
+      "hits": [
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.8563387989997864
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.8604742288589478
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.8790414333343506
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "cal_sql",
+      "split": "calibration",
+      "kind": "unrelated",
+      "query": "SELECT customer_id, SUM(price) FROM orders GROUP BY customer_id;",
+      "hits": [
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.7930928468704224
+        },
+        {
+          "module": "aes_addroundkey",
+          "type": "rtl",
+          "distance": 0.8070348501205444
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.8144002556800842
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "cal_css",
+      "split": "calibration",
+      "kind": "unrelated",
+      "query": "CSS flexbox center a navigation bar on a responsive web page",
+      "hits": [
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.9037803411483765
+        },
+        {
+          "module": "aes_sbox",
+          "type": "rtl",
+          "distance": 0.9038612246513367
+        },
+        {
+          "module": "aes_keyexpansion_tb",
+          "type": "testbench",
+          "distance": 0.9092189073562622
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "cal_garden",
+      "split": "calibration",
+      "kind": "unrelated",
+      "query": "When should I water tomato seedlings in a greenhouse?",
+      "hits": [
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.6550356149673462
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.6780052185058594
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.687204122543335
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "cal_python",
+      "split": "calibration",
+      "kind": "unrelated",
+      "query": "def reverse_words(sentence): return ' '.join(sentence.split()[::-1])",
+      "hits": [
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.857886016368866
+        },
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 0.8699111342430115
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.8825036287307739
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_sbox",
+      "split": "test",
+      "kind": "positive",
+      "query": "SystemVerilog nonlinear 8 bit substitution table for Rijndael",
+      "expected_modules": [
+        "aes_sbox",
+        "aes_subbytes"
+      ],
+      "hits": [
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.3927984833717346
+        },
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 0.4352731704711914
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.43608176708221436
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_shift",
+      "split": "test",
+      "kind": "positive",
+      "query": "Permute the rows of a 128 bit encryption state by rotating bytes",
+      "expected_modules": [
+        "aes_shiftrows"
+      ],
+      "hits": [
+        {
+          "module": "aes_shiftrows",
+          "type": "rtl",
+          "distance": 0.4125920534133911
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.4618443250656128
+        },
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.4642904996871948
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_mix",
+      "split": "test",
+      "kind": "positive",
+      "query": "Multiply encryption state column bytes by 02 and 03 in GF(256)",
+      "expected_modules": [
+        "aes_mixcolumns",
+        "aes_multiply"
+      ],
+      "hits": [
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.38321155309677124
+        },
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.4173732399940491
+        },
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.44388580322265625
+        }
+      ],
+      "expected_rank": 3,
+      "accepted": true
+    },
+    {
+      "id": "test_key",
+      "split": "test",
+      "kind": "positive",
+      "query": "Expand a 128 bit secret key using RotWord SubWord and round constants",
+      "expected_modules": [
+        "aes_keyexpansion"
+      ],
+      "hits": [
+        {
+          "module": "aes_addroundkey",
+          "type": "rtl",
+          "distance": 0.3676071763038635
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.38776934146881104
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.4005481004714966
+        }
+      ],
+      "expected_rank": 3,
+      "accepted": true
+    },
+    {
+      "id": "test_xor",
+      "split": "test",
+      "kind": "positive",
+      "query": "Bitwise exclusive OR of a 128 bit data state and its round key",
+      "expected_modules": [
+        "aes_addroundkey"
+      ],
+      "hits": [
+        {
+          "module": "aes_addroundkey",
+          "type": "rtl",
+          "distance": 0.3939446806907654
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.507257342338562
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.5119470357894897
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_tb",
+      "split": "test",
+      "kind": "positive",
+      "query": "Testbench asserts expected AES round key values against known vectors",
+      "expected_modules": [
+        "aes_keyexpansion_tb"
+      ],
+      "hits": [
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.3311197757720947
+        },
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.3892907500267029
+        },
+        {
+          "module": "aes_keyexpansion_tb",
+          "type": "testbench",
+          "distance": 0.39759624004364014
+        }
+      ],
+      "expected_rank": 3,
+      "accepted": true
+    },
+    {
+      "id": "test_subbytes_parallel",
+      "split": "test",
+      "kind": "positive",
+      "query": "Apply the same nonlinear byte substitution independently to all sixteen bytes of an encryption state.",
+      "expected_modules": [
+        "aes_subbytes"
+      ],
+      "hits": [
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.37959808111190796
+        },
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 0.4522569179534912
+        },
+        {
+          "module": "aes_addroundkey",
+          "type": "rtl",
+          "distance": 0.4712069630622864
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_sbox_mapping",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find the combinational case table that maps each possible input byte to its Rijndael substitution value.",
+      "expected_modules": [
+        "aes_sbox"
+      ],
+      "hits": [
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.49410659074783325
+        },
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.5106339454650879
+        },
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 0.5494976043701172
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_shift_positions",
+      "split": "test",
+      "kind": "positive",
+      "query": "Which circuit keeps the first state row unchanged and rotates the remaining rows by one, two, and three byte positions?",
+      "expected_modules": [
+        "aes_shiftrows"
+      ],
+      "hits": [
+        {
+          "module": "aes_shiftrows",
+          "type": "rtl",
+          "distance": 0.38895905017852783
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.5086212158203125
+        },
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.5685204863548279
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_mix_xtime",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find the column mixing logic that doubles bytes with a left shift and conditional XOR with hexadecimal 1b.",
+      "expected_modules": [
+        "aes_mixcolumns"
+      ],
+      "hits": [
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.4380640983581543
+        },
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.4590566158294678
+        },
+        {
+          "module": "aes_multiply",
+          "type": "rtl",
+          "distance": 0.522567629814148
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_addkey_combinational",
+      "split": "test",
+      "kind": "positive",
+      "query": "Combine a 128-bit state with a 128-bit round key using combinational XOR gates.",
+      "expected_modules": [
+        "aes_addroundkey"
+      ],
+      "hits": [
+        {
+          "module": "aes_addroundkey",
+          "type": "rtl",
+          "distance": 0.3966342806816101
+        },
+        {
+          "module": "aes_multiply",
+          "type": "rtl",
+          "distance": 0.4727560877799988
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.4902757406234741
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_round_composition",
+      "split": "test",
+      "kind": "positive",
+      "query": "Where are byte substitution, row permutation, column mixing, and key addition connected into one encryption round?",
+      "expected_modules": [
+        "aes_round"
+      ],
+      "hits": [
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.3815556764602661
+        },
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.38593554496765137
+        },
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.39687830209732056
+        }
+      ],
+      "expected_rank": 2,
+      "accepted": true
+    },
+    {
+      "id": "test_round_parameter",
+      "split": "test",
+      "kind": "positive",
+      "query": "Locate the parameterized encryption round whose generate branch bypasses the column transformation for the final round.",
+      "expected_modules": [
+        "aes_round"
+      ],
+      "hits": [
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.5208895802497864
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.5830375552177429
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.6092768907546997
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": false
+    },
+    {
+      "id": "test_key_schedule_words",
+      "split": "test",
+      "kind": "positive",
+      "query": "Generate the next four key words by transforming the last word and chaining exclusive OR operations with the previous words.",
+      "expected_modules": [
+        "aes_keyexpansion"
+      ],
+      "hits": [
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.5719166994094849
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.5780395269393921
+        },
+        {
+          "module": "aes_multiply",
+          "type": "rtl",
+          "distance": 0.5839442014694214
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": false
+    },
+    {
+      "id": "test_key_schedule_handshake",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find the clocked key schedule that accepts a start request and signals valid when the expanded keys are ready.",
+      "expected_modules": [
+        "aes_keyexpansion"
+      ],
+      "hits": [
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.4980105757713318
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.5014810562133789
+        },
+        {
+          "module": "aes_keyexpansion_tb",
+          "type": "testbench",
+          "distance": 0.5243130922317505
+        }
+      ],
+      "expected_rank": 2,
+      "accepted": false
+    },
+    {
+      "id": "test_full_controller",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find the encryption controller that waits for key expansion, performs initial key addition, iterates rounds, and signals completion.",
+      "expected_modules": [
+        "aes_full"
+      ],
+      "hits": [
+        {
+          "module": "aes_keyexpansion_tb",
+          "type": "testbench",
+          "distance": 0.43040913343429565
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.4377996325492859
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.4981571435928345
+        }
+      ],
+      "expected_rank": 3,
+      "accepted": true
+    },
+    {
+      "id": "test_full_reset",
+      "split": "test",
+      "kind": "positive",
+      "query": "Locate the top-level cipher sequential logic that clears the round counter, state, output data, and valid flag on active-low reset.",
+      "expected_modules": [
+        "aes_full"
+      ],
+      "hits": [
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.47488367557525635
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.4829826354980469
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.4993186593055725
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": false
+    },
+    {
+      "id": "test_full_key_selection",
+      "split": "test",
+      "kind": "positive",
+      "query": "Select the current 128-bit round key from a packed expanded-key bus using a round counter.",
+      "expected_modules": [
+        "aes_full"
+      ],
+      "hits": [
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.5300649404525757
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.5303882360458374
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.5304141640663147
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": false
+    },
+    {
+      "id": "test_full_known_answer",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find an end-to-end encryption testbench that supplies plaintext and a key, waits for valid, and compares ciphertext with an expected answer.",
+      "expected_modules": [
+        "aes_full_tb"
+      ],
+      "hits": [
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.3511121869087219
+        },
+        {
+          "module": "aes_keyexpansion_tb",
+          "type": "testbench",
+          "distance": 0.3826599717140198
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.47005999088287354
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_full_watchdog",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find a cipher testbench watchdog that reports a timeout when an encryption request never completes.",
+      "expected_modules": [
+        "aes_full_tb"
+      ],
+      "hits": [
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.6174785494804382
+        },
+        {
+          "module": "aes_keyexpansion_tb",
+          "type": "testbench",
+          "distance": 0.6613136529922485
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.7265447378158569
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": false
+    },
+    {
+      "id": "test_subbytes_stimulus",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find a standalone byte-substitution testbench that drives a 128-bit input state and prints the resulting state.",
+      "expected_modules": [
+        "aes_subbytes_tb"
+      ],
+      "hits": [
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 0.46636199951171875
+        },
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 0.488644003868103
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.5308173298835754
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_shiftrows_stimulus",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find a standalone row-permutation testbench that applies a fixed state, delays, and displays input and output.",
+      "expected_modules": [
+        "aes_shiftrows_tb"
+      ],
+      "hits": [
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.5480417609214783
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.6081398725509644
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.6345701217651367
+        }
+      ],
+      "expected_rank": 2,
+      "accepted": false
+    },
+    {
+      "id": "test_mixcolumns_stimulus",
+      "split": "test",
+      "kind": "positive",
+      "query": "Find a standalone column-mixing testbench that applies a fixed 128-bit state and prints the transformed columns.",
+      "expected_modules": [
+        "aes_mixcolumns_tb"
+      ],
+      "hits": [
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.326702356338501
+        },
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.4238888621330261
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.5076790452003479
+        }
+      ],
+      "expected_rank": 1,
+      "accepted": true
+    },
+    {
+      "id": "test_weather",
+      "split": "test",
+      "kind": "unrelated",
+      "query": "Why do clouds produce rain and snow?",
+      "hits": [
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.7777351140975952
+        },
+        {
+          "module": "aes_mixcolumns",
+          "type": "rtl",
+          "distance": 0.78093421459198
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.7854194641113281
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_music",
+      "split": "test",
+      "kind": "unrelated",
+      "query": "Explain the difference between major and minor piano chords.",
+      "hits": [
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.6397292613983154
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.6639981269836426
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.7320659160614014
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_pasta",
+      "split": "test",
+      "kind": "unrelated",
+      "query": "Ingredients for homemade spinach ravioli with tomato sauce",
+      "hits": [
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.792637050151825
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.8083968758583069
+        },
+        {
+          "module": "aes_round_tb",
+          "type": "testbench",
+          "distance": 0.8155739903450012
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_sort",
+      "split": "test",
+      "kind": "unrelated",
+      "query": "function sortNames(names) { return names.slice().sort(); }",
+      "hits": [
+        {
+          "module": "aes_shiftrows",
+          "type": "rtl",
+          "distance": 0.8541321754455566
+        },
+        {
+          "module": "aes_shiftrows_tb",
+          "type": "testbench",
+          "distance": 0.8886542320251465
+        },
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.8941013216972351
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_http",
+      "split": "test",
+      "kind": "unrelated",
+      "query": "Python FastAPI HTTP endpoint returns a JSON list of blog posts",
+      "hits": [
+        {
+          "module": "aes_mixcolumns_tb",
+          "type": "testbench",
+          "distance": 0.9989748001098633
+        },
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 1.0222970247268677
+        },
+        {
+          "module": "aes_subbytes",
+          "type": "rtl",
+          "distance": 1.0237518548965454
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_tree",
+      "split": "test",
+      "kind": "unrelated",
+      "query": "Implement a balanced binary search tree with AVL rotations in C++.",
+      "hits": [
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.6760880947113037
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.7199582457542419
+        },
+        {
+          "module": "aes_round",
+          "type": "rtl",
+          "distance": 0.7395972013473511
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_uart",
+      "split": "test",
+      "kind": "near_domain",
+      "query": "SystemVerilog UART receiver sampling serial bits with baud clock and parity errors",
+      "hits": [
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.6114130020141602
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.6530085802078247
+        },
+        {
+          "module": "aes_subbytes_tb",
+          "type": "testbench",
+          "distance": 0.6563934683799744
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_arbiter",
+      "split": "test",
+      "kind": "near_domain",
+      "query": "Verify a round robin bus arbiter for fairness and starvation under competing requests",
+      "hits": [
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.5976120233535767
+        },
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.604795515537262
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.6342028379440308
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_counter",
+      "split": "test",
+      "kind": "near_domain",
+      "query": "module counter(input logic clk, rst_n, output logic [7:0] count); always_ff @(posedge clk or negedge rst_n) begin if (!rst_n) count <= 0; else count <= count + 1; end endmodule",
+      "hits": [
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.44247323274612427
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.5152078866958618
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.596752941608429
+        }
+      ],
+      "expected_rank": null,
+      "accepted": true
+    },
+    {
+      "id": "test_pwm",
+      "split": "test",
+      "kind": "near_domain",
+      "query": "Test a PWM generator duty cycle and output pulse width at programmable frequencies",
+      "hits": [
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.6901496648788452
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.7007594108581543
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.748259425163269
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    },
+    {
+      "id": "test_fifo",
+      "split": "test",
+      "kind": "near_domain",
+      "query": "Synchronous FIFO verify ordering overflow underflow pointer wraparound and simultaneous read write",
+      "hits": [
+        {
+          "module": "aes_full_tb",
+          "type": "testbench",
+          "distance": 0.668360710144043
+        },
+        {
+          "module": "aes_keyexpansion",
+          "type": "rtl",
+          "distance": 0.7095942497253418
+        },
+        {
+          "module": "aes_full",
+          "type": "rtl",
+          "distance": 0.718694806098938
+        }
+      ],
+      "expected_rank": null,
+      "accepted": false
+    }
+  ],
+  "filter_checks_passed": 2,
+  "fifo_hits": [
+    {
+      "module": "aes_full_tb",
+      "type": "testbench",
+      "distance": 0.6111500263214111
+    },
+    {
+      "module": "aes_full",
+      "type": "rtl",
+      "distance": 0.6251718401908875
+    },
+    {
+      "module": "aes_full",
+      "type": "rtl",
+      "distance": 0.6282873153686523
+    }
+  ],
+  "fifo_accepted": false,
+  "run_note": "Evaluated existing persisted collection directly because embed.py currently has syntax errors; current source/collection consistency was not revalidated."
+}

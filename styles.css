@@ -41,6 +41,26 @@ h2 { margin: 0 0 16px; font-size: 21px; font-weight: 500; }
 .back-link { display: inline-block; margin-bottom: 28px; }
 .skip-link { position: absolute; top: -100px; left: 16px; padding: 12px; background: #fff; }
 .skip-link:focus { top: 12px; }
+.case-study { max-width: 760px; }
+.case-study section { margin-top: 42px; }
+.project-status, .case-study .source-note { font-size: 14px; color: #666; }
+.pipeline { margin: 0 0 22px; padding: 20px; background: #f7f7f7; border: 1px solid #ececec; border-radius: 4px; }
+.pipeline p { font-size: 16px; }
+.pipeline span { padding-inline: 4px; color: #747474; }
+.pipeline figcaption { color: #666; font-size: 14px; line-height: 1.6; }
+.table-scroll { overflow-x: auto; margin-bottom: 20px; }
+.case-study table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+.case-study caption { text-align: left; color: #666; font-size: 14px; padding-bottom: 12px; }
+.case-study th, .case-study td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #ececec; }
+.case-study th { font-weight: 500; }
+.case-study td { color: #555; }
+.retrieval-example { border-bottom: 1px solid #ececec; }
+.retrieval-example summary { padding: 18px 0; cursor: pointer; line-height: 1.5; }
+.retrieval-example summary:focus-visible { outline: 2px solid #335e85; outline-offset: 3px; }
+.retrieval-example code { font-size: 13px; overflow-wrap: anywhere; }
+.case-study blockquote { margin: 22px 0; padding: 4px 0 4px 20px; border-left: 3px solid #ccc; }
+.case-study blockquote p { margin-bottom: 10px; }
+.case-study cite { color: #666; font-size: 14px; font-style: normal; }
 @media (max-width: 600px) {
     .site { width: calc(100% - 40px); }
     .site-header { align-items: flex-start; flex-direction: column; gap: 18px; padding-block: 22px; }
