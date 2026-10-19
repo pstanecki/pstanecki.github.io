@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A future project showcase for a SHA-256 hash accelerator ASIC.">
+    <title>SHA-256 Hash Accelerator ASIC — Paul Stanecki</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="sha256-diagrams/viewer.css">
+    <script src="sha256-diagrams/viewer.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site">
+        <header class="site-header">
+            <a class="site-name" href="../index.html">Paul Stanecki</a>
+            <nav aria-label="Main navigation">
+                <a href="../index.html">Start Here</a>
+                <a href="../about.html">About</a>
+            </nav>
+        </header>
+        <main id="main" class="case-study">
+            <a class="text-link back-link" href="../index.html">← Back to home</a>
+            <h1>SHA-256 Hash Accelerator ASIC</h1>
+            <p class="project-status">In progress</p>
+            <p class="intro">A dedicated hardware accelerator for SHA-256 hashing.</p>
+
+            <!-- Replace the placeholders below as the project develops. -->
+            <section aria-labelledby="overview-heading">
+                <h2 id="overview-heading">Overview</h2>
+                <p>The goal of this project is to design and tape out a hash accelerating ASIC for the SHA-256 algorithm.</p>
+            </section>
+
+            <section aria-labelledby="design-heading">
+                <h2 id="design-heading">Design</h2>
+                <p>Select a yellow block to further investigate the design. Use “Up one level” to return to its parent.</p>
+                <div class="rtl-viewer" data-rtl-viewer>
+                    <div class="rtl-toolbar" hidden>
+                        <button type="button" class="rtl-up" data-up disabled>↑ Up one level</button>
+                        <nav class="rtl-breadcrumbs" aria-label="Diagram hierarchy" data-breadcrumbs></nav>
+                    </div>
+                    <div class="rtl-heading">
+                        <div>
+                            <span class="rtl-order" data-order>First order</span>
+                            <h3 id="rtl-title" tabindex="-1" data-title>Top module</h3>
+                        </div>
+                        <div class="rtl-zoom" role="group" aria-label="Diagram zoom" hidden>
+                            <button type="button" data-zoom-out aria-label="Zoom out" disabled>−</button>
+                            <output data-zoom-label aria-live="polite" aria-label="Zoom level">100%</output>
+                            <button type="button" data-zoom-in aria-label="Zoom in">+</button>
+                            <button type="button" data-fit>Fit</button>
+                        </div>
+                    </div>
+                    <ul class="rtl-legend" aria-label="Block colors">
+                        <li><span class="rtl-swatch rtl-yellow" aria-hidden="true"></span>Explore module</li>
+                        <li><span class="rtl-swatch rtl-green" aria-hidden="true"></span>Low-level module</li>
+                        <li><span class="rtl-swatch rtl-pink" aria-hidden="true"></span>External hardware</li>
+                    </ul>
+                    <div class="rtl-viewport" tabindex="0" role="region" aria-labelledby="rtl-title" aria-describedby="rtl-view-help" data-viewport>
+                        <div class="rtl-stage" data-stage>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-18 62 1430 530" role="img" aria-label="Top module: Accelerator, Preprocessing, and Interface, connected to Hash and Round Constants and an external SPI Master." data-diagram>
+                                <image href="sha256-diagrams/page-1.png" width="2541" height="2725" />
+                            </svg>
+                            <div class="rtl-hotspots" data-hotspots></div>
+                        </div>
+                    </div>
+                    <div class="rtl-explore" data-explore hidden></div>
+                    <div class="rtl-footer">
+                        <p id="rtl-view-help">Zoom in for signal labels; scroll to move around the diagram.</p>
+                    </div>
+                    <p class="rtl-sr-only" aria-live="polite" aria-atomic="true" data-status></p>
+                    <noscript><p class="rtl-no-script">Enable JavaScript to explore the modules, or open the original diagrams above.</p></noscript>
+                </div>
+            </section>
+
+            <section aria-labelledby="verification-heading">
+                <h2 id="verification-heading">Verification</h2>
+                <p></p>
+            </section>
+
+            <section aria-labelledby="results-heading">
+                <h2 id="results-heading">Synthesis</h2>
+                <p></p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
