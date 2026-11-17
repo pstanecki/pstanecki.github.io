@@ -75,12 +75,35 @@
 
             <section aria-labelledby="verification-heading">
                 <h2 id="verification-heading">Verification</h2>
-                <p></p>
+                <p>The verification plan checks individual modules first, then their behavior together through a complete hash.</p>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr><th scope="col">Level</th><th scope="col">Block</th><th scope="col">Key checks</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Unit</td><th scope="row">Data compression</th><td>Initial hash load, round enable and pause, all 64 cycles, asynchronous reset.</td></tr>
+                            <tr><td>Unit</td><th scope="row">Message scheduler</th><td>Padded block load, word order and per-cycle schedule against SHA-256, adder output, and load/reset/round priority.</td></tr>
+                            <tr><td>Unit</td><th scope="row">FSM</th><td>Control outputs in each state and transitions from idle through load, round, update, and done.</td></tr>
+                            <tr><td>Unit</td><th scope="row">Preprocessing</th><td>Reset, buffering and padding for inputs below, at, and above the maximum length; successive inputs.</td></tr>
+                            <tr><td>Integration</td><th scope="row">Scheduler + compression</th><td>Block loading, cycle timing and data handoff, reset, block boundaries, and empty or synthetic inputs.</td></tr>
+                            <tr><td>Integration</td><th scope="row">Hash computation</th><td>Valid and invalid blocks, round enable and pause, 64-cycle accuracy, and hash updates.</td></tr>
+                            <tr><td>System</td><th scope="row">Accelerator + top</th><td>Start, reset during computation, completion and digest validity; constants, input sizes, block timing, and known SHA-256 vectors.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <section aria-labelledby="results-heading">
-                <h2 id="results-heading">Synthesis</h2>
-                <p></p>
+                <h2 id="results-heading">Emulation</h2>
+		<p>From the start of the semester, we were planning on performing a demo with a RP Pico and a PC, with a simple diagram shown below.</p>
+		<img src="sha256-diagrams/emulation-demo.png" alt="Demo setup: the SHA-256 ASIC communicates with a Raspberry Pi over GPIO or SPI, and the Raspberry Pi transfers data to and from a computer over USB." style="max-width: 100%; height: auto;">
+		<p>Upon presenting our plan in a design review, one of our reviewers brought up a very interesting and valid question: why were we using the Pico?</p>
+		<p>Most communication protocols we could feasibly integrate would likely bottleneck our accelerator. We switched from the onboard UART to SPI because UART would've been so slow. But with our Pico interface, we have not only SPI bottlenecking the accelerator, but a second USB interface to our PC also slowing down the transfer of data. This could make our accelerator more of a proof-of-concept design than a finished product.</p>
+		<p>We didn't want to settle for that, so our next challenge was coming up with a meaningful demonstration that shows our product is a functional and applicable tool. We also wanted it to align with our own interests, most notably computer networks.</p>
+		<p>Connecting to the accelerator over a network doesn't magically remove the bottlenecks. But with another FPGA, we could design a network interface controller and demonstrate functionality within a typical computer network system.</p>
+		<p>If our priority was to showcase the maximum throughput the accelerator could provide, we could instead consider a Bitcoin mining demonstration. An 80-byte header provides the starting point for up to 2^32 nonce values, though the demo would need to support nonce variation and Bitcoin's double SHA-256 hashing. Communicating to our accelerator via Ethernet could also reflect the systems set up in Bitcoin mining farms.</p>
+		<p>Our next step is deciding on a target for our demo, and completing it before the end of the semester.</p>
             </section>
         </main>
     </div>
